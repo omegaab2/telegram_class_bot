@@ -1,0 +1,71 @@
+
+create table clscontent
+(
+    post_id    bigint                     not null
+        constraint clscontent_pkey
+            primary key,
+    class_name text                       not null,
+    post_name  text                       not null,
+    stage      text default 'third'::text not null
+);
+
+//////////////////////////////////////////////////////////////////////////
+
+create table subject
+(
+    subject_id      bigserial
+        constraint subject_pkey
+            primary key,
+    subject_name    text                       not null,
+    stage           text default 'third'::text not null,
+    en_subject_name text                       not null
+);
+
+////////////////////////////////////////////////////////////////////////
+create table exam
+(
+    exam_id         bigserial
+        constraint exam_pkey
+            primary key,
+    subject_name    text                  not null,
+    exam_date       date                  not null,
+    exam_note       text,
+    en_subject_name text                  not null,
+    homework        boolean default false not null
+);
+
+//////////////////////////////////////////////////////////////////////
+create table subjects_table
+(
+    subject_name    text not null,
+    subject_day     text not null,
+    subject_time    time not null,
+    en_subject_name text,
+    id              bigserial
+        constraint subjects_table_pk
+            primary key
+);
+
+/////////////////////////////////////////////////////////////////////
+
+create table meet_links
+(
+    subject_name    text not null,
+    subject_link    text not null,
+    en_subject_name text not null
+);
+
+
+create unique index meet_links_en_subject_name_uindex
+    on meet_links (en_subject_name);
+
+////////////////////////////////////////////////////////////////////
+
+create table admin
+(
+    id         bigserial
+        constraint admin_pkey
+            primary key,
+    admin_name text not null,
+    tele_id    bigint
+);
